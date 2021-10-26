@@ -1,9 +1,23 @@
-from tkinter import *
-from tkinter import ttk
+import tkinter as tk
 
-root = Tk()
-frm = ttk.Frame(root, padding=10)
-frm.grid()
-ttk.Label(frm, text="Hello World").grid(column=0, row=0)
-ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
-root.mainloop()
+window = tk.Tk()
+frame = tk.Frame(window)
+userLabel = tk.Label(frame, text="Username")
+userLabel.pack()
+userInput = tk.Entry()
+userInput.pack()
+pswdLabel = tk.Label(frame, text="Password")
+pswdLabel.pack()
+pswdInput = tk.Entry()
+pswdInput.pack()
+submit = tk.Button(frame, text="Log In", command=logInToApp(userInput.get(), pswdInput.get()))
+window.mainloop()
+
+def logInToApp(usrnm, pswd):
+    cursor = db.cursor()
+    cursor.execute("SELECT * FROM logdb WHERE username='"+usrnm+"' AND password='"+pswd+"';")
+    result = cursor.fetchall()
+
+    if(result > 1):
+        '''go to next window'''
+        
