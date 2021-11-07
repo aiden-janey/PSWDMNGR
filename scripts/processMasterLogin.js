@@ -12,8 +12,8 @@ var mstrPswd = $("#pswd").value;
 var mysql = require('mysql');
 var connect = mysql.createConnection({
     host: "localhost",
-    user: "mysqlUser",
-    password: "mysqlPassword",
+    user: "root",
+    password: "",
     database: "PassStoreDB"
 });
 
