@@ -1,0 +1,3 @@
+var encrypt = function ($pswd){
+    
+};

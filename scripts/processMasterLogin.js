@@ -1,4 +1,4 @@
-//connect with jquer CDN
+//connect with jquery CDN
 var script = document.createElement('script');
 script.src = 'https://code.jquery.com/jquery-3.4.1.min.js';
 script.type = 'text/javascript';
@@ -17,6 +17,13 @@ var connect = mysql.createConnection({
     database: "PassStoreDB"
 });
 
-//query the table
-
-//redirect using fs
+connect.connect(function (err) {
+    if (err) throw err;
+    console.log("Connection Established.")
+    var sql = "SELECT * FROM login_list WHERE username = "+mstrUser+
+    " AND passwd = "+mstrPswd+";";
+    connect.query(sql, function(err, result, fields){
+        if(result > 0)
+            window.location.replace("localhost:8080/homepage.html")
+    });
+});
