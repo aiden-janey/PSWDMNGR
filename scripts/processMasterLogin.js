@@ -13,14 +13,14 @@ var mysql = require('mysql');
 var connect = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
+    password: "W46t@9Vd8$X7",
     database: "PassStoreDB"
 });
 
 connect.connect(function (err) {
     if (err) throw err;
     console.log("Connection Established.")
-    var sql = "SELECT * FROM login_list WHERE username = "+mstrUser+
+    var sql = "SELECT * FROM master_login WHERE username = "+mstrUser+
     " AND passwd = "+mstrPswd+";";
     connect.query(sql, function(err, result, fields){
         if(result > 0)

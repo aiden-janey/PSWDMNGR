@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 var fs = require('fs');
-var port = 8080;
+var port = 80;
 
 app.get('/', function (req, res) {
   fs.readFile('./webpages/index.html', function(err, data){
