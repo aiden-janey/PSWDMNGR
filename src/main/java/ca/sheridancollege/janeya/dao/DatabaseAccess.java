@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import ca.sheridancollege.janeya.beans.Password;
+import ca.sheridancollege.janeya.beans.MasterPassword;
 
 @Repository
 public class DatabaseAccess {
@@ -16,14 +16,15 @@ public class DatabaseAccess {
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbc;
 	
-	public long checkCredentials(Password password) {
+	public List<MasterPassword> checkCredentials(MasterPassword pswd) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String query = "SELECT * FROM password WHERE useremail = :useremail"
+		String query = "SELECT * FROM MasterPassword WHERE useremail = :useremail"
 				+ " AND userpass = :userpass;";
-		namedParam.addValue("useremail", password.getUserEmail());
-		namedParam.addValue("userpass", password.getUserPass());
-		long numOfRows = jdbc.query(query, namedParam, new BeanPropertyRowMapper<Password>(Password.class));
-		return numOfRows
+		namedParam.addValue("useremail", pswd.getMstrUser());
+		namedParam.addValue("userpass", pswd.getMsterPass());
+		List<MasterPassword> results = jdbc.query(query, namedParam, 
+				new BeanPropertyRowMapper<MasterPassword>(MasterPassword.class));
+		return results;
 	}
 	
 }
