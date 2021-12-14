@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 @EntityScan
-public class MasterPassword implements Serializable{
+public class User implements Serializable{
 
 	/**
 	 * 
@@ -14,7 +14,7 @@ public class MasterPassword implements Serializable{
 	private String mstrUser;
 	private String msterPass;
 	
-	public MasterPassword() {}
+	public User() {}
 
 	public String getMstrUser() {
 		return mstrUser;
