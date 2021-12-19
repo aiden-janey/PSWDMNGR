@@ -32,7 +32,7 @@ public class Password implements Serializable{
 	public String getUserPass() {
 		return userPass;
 	}
-	public void setUserPass(String userPass) {
+	public void setPassword(String userPass) {
 		this.userPass = userPass;
 	}
 	

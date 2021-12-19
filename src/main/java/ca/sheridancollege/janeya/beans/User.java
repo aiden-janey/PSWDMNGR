@@ -12,24 +12,24 @@ public class User implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String mstrUser;
-	private String msterPass;
+	private String mstrPass;
 	
 	public User() {}
 
-	public String getMstrUser() {
+	public String getUser() {
 		return mstrUser;
 	}
 
-	public void setMstrUser(String mstrUser) {
+	public void setUser(String mstrUser) {
 		this.mstrUser = mstrUser;
 	}
 
-	public String getMsterPass() {
-		return msterPass;
+	public String getPass() {
+		return mstrPass;
 	}
 
-	public void setMsterPass(String msterPass) {
-		this.msterPass = msterPass;
+	public void setPass(String mstrPass) {
+		this.mstrPass = mstrPass;
 	}
 	
 	

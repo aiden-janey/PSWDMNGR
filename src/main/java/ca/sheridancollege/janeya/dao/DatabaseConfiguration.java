@@ -13,7 +13,7 @@ public class DatabaseConfiguration {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
 		dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 		dataSource.setUrl("jdbc:mysql://localhost:3306/passstoredb");
-		dataSource.setUsername("root");
+		dataSource.setUsername("java-mysql");
 		dataSource.setPassword("W46t@9Vd8$X7");
 		return dataSource;
 	}

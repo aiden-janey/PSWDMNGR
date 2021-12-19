@@ -8,7 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import ca.sheridancollege.janeya.beans.MasterPassword;
+import ca.sheridancollege.janeya.beans.User;
 
 @Repository
 public class DatabaseAccess {
@@ -16,15 +16,20 @@ public class DatabaseAccess {
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbc;
 	
-	public List<MasterPassword> checkCredentials(MasterPassword pswd) {
+	public User checkCredentials(User pswd) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String query = "SELECT * FROM MasterPassword WHERE useremail = :useremail"
-				+ " AND userpass = :userpass;";
-		namedParam.addValue("useremail", pswd.getMstrUser());
-		namedParam.addValue("userpass", pswd.getMsterPass());
-		List<MasterPassword> results = jdbc.query(query, namedParam, 
-				new BeanPropertyRowMapper<MasterPassword>(MasterPassword.class));
-		return results;
+		String query = "SELECT * FROM user WHERE mstrUser = :useremail"
+				+ " AND mstrPass = :userpass;";
+		namedParam.addValue("useremail", pswd.getUser());
+		namedParam.addValue("userpass", pswd.getPass());
+		User result = (User) jdbc.query(query, namedParam, new BeanPropertyRowMapper<User>(User.class));
+		return result;
 	}
 	
+	public List<User> selectPasswords(){
+		MapSqlParameterSource namedParam = new MapSqlParameterSource();
+		String query = "SELECT * FROM password;";
+		List<User> results = jdbc.query(query, namedParam, new BeanPropertyRowMapper<User>(User.class));
+		return results;
+	}
 }

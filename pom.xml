@@ -59,6 +59,7 @@
 			<artifactId>spring-session-core</artifactId>
 		</dependency>
 	</dependencies>
+	
 
 	<build>
 		<plugins>
