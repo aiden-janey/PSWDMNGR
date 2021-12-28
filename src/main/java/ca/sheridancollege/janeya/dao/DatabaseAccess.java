@@ -16,7 +16,7 @@ public class DatabaseAccess {
 	
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbc;
-	
+
 	public User checkCredentials(User pswd) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
 		String query = "SELECT * FROM user WHERE mstrUser = :useremail"

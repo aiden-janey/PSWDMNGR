@@ -12,23 +12,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import ca.sheridancollege.janeya.beans.Password;
 import ca.sheridancollege.janeya.beans.User;
 import ca.sheridancollege.janeya.dao.DatabaseAccess;
+import ca.sheridancollege.janeya.tools.UserIDCreation;
 
 @Controller
 public class PassStoreAppController {
+
 	@Autowired
 	private DatabaseAccess da;
-	
+
+	private UserIDCreation uidc;
+
 	@GetMapping("/index")
-	public String indexSubmit(){
+	public String index(Model model){
+		model.addAttribute("user", new User());
 		return "/index";
 	}
-	
-	@GetMapping("/masterLogin")
-	public String masterLogin(Model model) {
-		model.addAttribute("user", new User());
-		return "/masterLogin";
-	}
-	@PostMapping("/masterLogin")
+	@PostMapping("/index")
 	public String indexSubmit(Model model, @ModelAttribute User user) {
 		User usr = da.checkCredentials(user);
 		if(usr != null)
@@ -36,11 +35,13 @@ public class PassStoreAppController {
 		else
 			return "/badLogin";
 	}
-	
-	@PostMapping("{userid}/viewList")
-	public String viewList(Model model) {
-		List<Password> list = da.selectPasswords();
-		model.addAttribute("list", list);
-		return "/viewList";
+
+	@GetMapping("/register")
+	public String register(){
+		return "/register";
+	}
+	@PostMapping("/register")
+	public String registerSubmit(){
+		return null;
 	}
 }

@@ -11,10 +11,19 @@ public class User implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String mstrId;
 	private String mstrUser;
 	private String mstrPass;
 	
 	public User() {}
+
+	public String getMstrId() {
+		return mstrId;
+	}
+
+	public void setMstrId(String mstrId) {
+		this.mstrId = mstrId;
+	}
 
 	public String getUser() {
 		return mstrUser;
