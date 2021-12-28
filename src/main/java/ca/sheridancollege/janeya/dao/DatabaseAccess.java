@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import ca.sheridancollege.janeya.beans.Password;
 import ca.sheridancollege.janeya.beans.User;
 
 @Repository
@@ -26,10 +27,10 @@ public class DatabaseAccess {
 		return result;
 	}
 	
-	public List<User> selectPasswords(){
+	public List<Password> selectPasswords(){
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
 		String query = "SELECT * FROM password;";
-		List<User> results = jdbc.query(query, namedParam, new BeanPropertyRowMapper<User>(User.class));
+		List<Password> results = jdbc.query(query, namedParam, new BeanPropertyRowMapper<Password>(Password.class));
 		return results;
 	}
 }

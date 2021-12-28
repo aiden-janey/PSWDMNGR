@@ -2,9 +2,9 @@ package ca.sheridancollege.janeya.beans;
 
 import java.io.Serializable;
 
-import javax.persistence.Entity;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 
-@Entity
+@EntityScan
 public class Password implements Serializable{
 
 	/**
