@@ -17,11 +17,11 @@ public class User implements Serializable{
 	
 	public User() {}
 
-	public String getMstrId() {
+	public String getId() {
 		return mstrId;
 	}
 
-	public void setMstrId(String mstrId) {
+	public void setId(String mstrId) {
 		this.mstrId = mstrId;
 	}
 

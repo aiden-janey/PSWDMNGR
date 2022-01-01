@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:insert="fragments/general.html :: headerfiles">
-        <title>PassMan Login</title>
+        <title>Password Manager Register</title>
     </head>
     <body>
         <div id="container">
             <div id="header">
-                <h1>Log Into PassStore</h1>
+                <h1>Register a User</h1>
             </div>
-            <form action="#" th:action="@{/index}" method="post">
+            <form action="#" th:action="@{/register}" method="post">
                 <label>Username</label>
                 <input type="text" name="username" placeholder="Enter Username" >
                 <br>

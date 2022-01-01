@@ -17,20 +17,30 @@ public class DatabaseAccess {
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbc;
 
-	public User checkCredentials(User pswd) {
+	public User checkCredentials(String username,  String password) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String query = "SELECT * FROM user WHERE mstrUser = :useremail"
-				+ " AND mstrPass = :userpass;";
-		namedParam.addValue("useremail", pswd.getUser());
-		namedParam.addValue("userpass", pswd.getPass());
+		String query = "SELECT * FROM user WHERE mstrUser = :username"
+				+ " AND mstrPass = :password;";
+		namedParam.addValue("username", username);
+		namedParam.addValue("password", password);
 		User result = (User) jdbc.query(query, namedParam, new BeanPropertyRowMapper<User>(User.class));
 		return result;
 	}
 	
-	public List<Password> selectPasswords(){
+	public List<Password> selectPasswords(String userId){
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String query = "SELECT * FROM password;";
+		String query = "SELECT * FROM " + userId + ";";
 		List<Password> results = jdbc.query(query, namedParam, new BeanPropertyRowMapper<Password>(Password.class));
 		return results;
+	}
+
+	public long registerUser(User user){
+		MapSqlParameterSource namedParam = new MapSqlParameterSource();
+		String insert = "INSERT INTO user (mstrId, mstrUser, mstrPass) VALUES (:userid, :username, :password);";
+		namedParam.addValue("userid", user.getId());
+		namedParam.addValue("username", user.getUser());
+		namedParam.addValue("password", user.getPass());
+		long rowsAffected = jdbc.update(insert, namedParam);
+		return rowsAffected;
 	}
 }
