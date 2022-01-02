@@ -2,14 +2,8 @@ package ca.sheridancollege.janeya.beans;
 
 import java.io.Serializable;
 
-import org.springframework.boot.autoconfigure.domain.EntityScan;
-
-@EntityScan
 public class Password implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private String website;
 	private String userEmail;
