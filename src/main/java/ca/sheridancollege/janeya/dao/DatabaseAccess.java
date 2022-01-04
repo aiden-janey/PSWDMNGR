@@ -29,7 +29,8 @@ public class DatabaseAccess {
 	
 	public List<Password> selectPasswords(String userId){
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String query = "SELECT * FROM " + userId + ";";
+		String query = "SELECT * FROM 5vun7jr5dnwjq8y8;";
+		//namedParam.addValue("userId", userId);
 		List<Password> results = jdbc.query(query, namedParam, new BeanPropertyRowMapper<Password>(Password.class));
 		return results;
 	}
@@ -42,5 +43,19 @@ public class DatabaseAccess {
 		namedParam.addValue("password", user.getPass());
 		long rowsAffected = jdbc.update(insert, namedParam);
 		return rowsAffected;
+	}
+
+	public long deleteUser(String userId){
+		MapSqlParameterSource namedParam = new MapSqlParameterSource();
+		String delete = "DELETE";
+		namedParam.addValue("userId", userId);
+		long rowsAffected = jdbc.update(delete, namedParam);
+		return rowsAffected;
+	}
+
+	public User selectAPassword(String userId, String website){
+		MapSqlParameterSource namedParam = new MapSqlParameterSource();
+		String query = "SELECT * FROM :";
+		return new User();
 	}
 }

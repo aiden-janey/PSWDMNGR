@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ca.sheridancollege.janeya.beans.Password;
 import ca.sheridancollege.janeya.beans.User;
@@ -22,46 +23,37 @@ public class PassStoreAppController {
 	private DatabaseAccess da;
 	private UserIDCreation uidc;
 
-	//initial login page
+	//index page explaining the project
 	@GetMapping("/index")
-	public String index(Model model, @RequestParam(name = "username") String username,
-	@RequestParam(name = "password") String password){
-		User user = new User();
-		user.setUser(username);
-		user.setPass(password);
-		model.addAttribute("user", user);
+	public String index(){
 		return "/index";
 	}
 	@PostMapping("/index")
-	public String indexSubmit(Model model, @ModelAttribute User user, HttpSession session){
-		User result = da.checkCredentials(user.getUser(), user.getPass());
+	public String logInSubmit(Model model, @RequestParam(name="username")String username, 
+		@RequestParam(name="password")String password, HttpSession session){
+		User result = da.checkCredentials(username, password);
 		if(result != null){
-			session.setAttribute("userId", result.getId());
+			session.setAttribute("currentUser", result);
 			return "/viewPasswords";
 		}
-		else
+		else{
 			return "/badLogin";
-	}
-
-	//bad login
-	@GetMapping("badLogin")
-	public String badLogin(){
-		return "/badLogin";
+		}
 	}
 
 	//register user page
 	@GetMapping("/register")
-	public String register(Model model, @RequestParam(name = "username") String username,
-		@RequestParam(name = "password") String password){
+	public String register(){
+		return "/register";
+	}
+	@PostMapping("/register")
+	public String registerSubmit(Model model, @RequestParam(name = "username") String username,
+	@RequestParam(name = "password") String password){
 		User user = new User();
 		user.setId(uidc.createId(16));
 		user.setUser(username);
 		user.setPass(password);
 		model.addAttribute("user", user);
-		return "/register";
-	}
-	@PostMapping("/register")
-	public String registerSubmit(Model model, @ModelAttribute User user){
 		long rowsAffected = da.registerUser(user);
 		if(rowsAffected >= 1){
 			return "/confirmRegister";
@@ -72,10 +64,10 @@ public class PassStoreAppController {
 	}
 
 	//view passwords page
-	@PostMapping("/viewPasswords")
+	@RequestMapping("/viewPasswords")
 	public String viewPasswords(Model model, HttpSession session){
-		String userId = (String) session.getAttribute("userid");
-		List<Password> passwordList = da.selectPasswords(userId);
+		//User user = (User) session.getAttribute("currentUser");
+		List<Password> passwordList = da.selectPasswords("user.getId()");
 		model.addAttribute("passwordList", passwordList);
 		return "/viewPasswords";
 	}
