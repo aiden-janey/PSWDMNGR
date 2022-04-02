@@ -1,9 +1,11 @@
 # PSWDMNGR
 PSWDMNGR is a Web-based Application made using the Java Springboot framework. 
+
 Front-End:
-* CSS - Bootstrap
-* JS - Angular
+  * CSS - Bootstrap
+  * JS - Angular
+
 Back-End:
-* Codebase - Java
-* Database - MySQL
-* Run-time - Springboot
+  * Codebase - Java
+  * Database - MySQL
+  * Run-time - Springboot
