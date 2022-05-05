@@ -2,9 +2,9 @@
     #container{
         display: grid;
         grid-template-areas: 
-        'headheadhead'
-        '.login.'
-        'footfootfoot';
+        'head head head'
+        '. login .'
+        'foot foot foot';
         padding: 10px;
     }
     #login{
