@@ -13,31 +13,31 @@ import ca.sheridancollege.janeya.beans.User;
 
 @Repository
 public class DatabaseAccess {
-	
+
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbc;
 
-	public User checkCredentials(String username,  String password) {
+	public List<User> checkCredentials(String username, String password) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String query = "SELECT * FROM user WHERE mstrUser = :username"
-				+ " AND mstrPass = :password;";
+		String query = "SELECT * FROM master_login WHERE username = :username"
+				+ " AND passwd = :password;";
 		namedParam.addValue("username", username);
 		namedParam.addValue("password", password);
-		User result = (User) jdbc.query(query, namedParam, new BeanPropertyRowMapper<User>(User.class));
+		List<User> result = jdbc.query(query, namedParam, new BeanPropertyRowMapper<User>(User.class));
 		return result;
 	}
-	
-	public List<Password> selectPasswords(String userId){
+
+	public List<Password> selectPasswords(String userId) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
 		String query = "SELECT * FROM 5vun7jr5dnwjq8y8;";
-		//namedParam.addValue("userId", userId);
+		// namedParam.addValue("userId", userId);
 		List<Password> results = jdbc.query(query, namedParam, new BeanPropertyRowMapper<Password>(Password.class));
 		return results;
 	}
 
-	public long registerUser(User user){
+	public long registerUser(User user) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
-		String insert = "INSERT INTO user (mstrId, mstrUser, mstrPass) VALUES (:userid, :username, :password);";
+		String insert = "INSERT INTO master_login (userid, username, passwd) VALUES (:userid, :username, :password);";
 		namedParam.addValue("userid", user.getId());
 		namedParam.addValue("username", user.getUser());
 		namedParam.addValue("password", user.getPass());
@@ -45,7 +45,7 @@ public class DatabaseAccess {
 		return rowsAffected;
 	}
 
-	public long deleteUser(String userId){
+	public long deleteUser(String userId) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
 		String delete = "DELETE";
 		namedParam.addValue("userId", userId);
@@ -53,9 +53,13 @@ public class DatabaseAccess {
 		return rowsAffected;
 	}
 
-	public User selectAPassword(String userId, String website){
+	public User selectAPassword(String userId, String website) {
 		MapSqlParameterSource namedParam = new MapSqlParameterSource();
 		String query = "SELECT * FROM :";
 		return new User();
+	}
+
+	public long createSchema(String userId) {
+		String create = "CREATE TABLE";
 	}
 }

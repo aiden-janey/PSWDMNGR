@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head th:insert="fragments/general.html :: headerfiles">
-        <title>PassMan Login</title>
+        <title>PSWDMNGR</title>
     </head>
     <body>
-        <div id="container" class="card">
+        <div id="container">
             <div id="header">
                 <h1>Log Into PassStore</h1>
             </div>
-            <form action="/index" method="post">
-                <label>Username</label>
-                <input type="text" name="username" placeholder="Enter Username" >
-                <br>
-                <label>Password</label>
-                <input type="password" name="password" placeholder="Enter Password" >
-                <br>
-                <input type="submit" value="Log In">
-            </form>
-			<p>Not signed up? Register<a href="/register"> here</a>!</p>
+            <div id="body">
+                <form action="/index" method="post">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Enter Username" >
+                    <br>
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Enter Password" >
+                    <br>
+                    <input type="submit" value="Log In">
+                </form>
+            </div>
+            <div id="footer">
+                <p>Not signed up? Register <a href="/register">here</a>!</p>
+            </div>
         </div>
     </body>
 </html>

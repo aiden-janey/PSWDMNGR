@@ -23,67 +23,67 @@ public class PassStoreAppController {
 	private DatabaseAccess da;
 	private UserIDCreation uidc;
 
-	//index page explaining the project
+	// index page explaining the project
 	@GetMapping("/index")
-	public String index(){
+	public String index() {
 		return "/index";
 	}
+
 	@PostMapping("/index")
-	public String logInSubmit(Model model, @RequestParam(name="username")String username, 
-		@RequestParam(name="password")String password, HttpSession session){
-		User result = da.checkCredentials(username, password);
-		if(result != null){
-			session.setAttribute("currentUser", result);
+	public String logInSubmit(Model model, @RequestParam(name = "username") String username,
+			@RequestParam(name = "password") String password, HttpSession session) {
+		List<User> result = da.checkCredentials(username, password);
+		if (result.size() == 1) {
+			User user = result.get(0);
+			session.setAttribute("currentUser", user.getId());
 			return "/viewPasswords";
-		}
-		else{
+		} else {
 			return "/badLogin";
 		}
 	}
 
-	//register user page
+	// register user page
 	@GetMapping("/register")
-	public String register(){
+	public String register() {
 		return "/register";
 	}
+
 	@PostMapping("/register")
 	public String registerSubmit(Model model, @RequestParam(name = "username") String username,
-	@RequestParam(name = "password") String password){
+			@RequestParam(name = "password") String password) {
 		User user = new User();
 		user.setId(uidc.createId(16));
 		user.setUser(username);
 		user.setPass(password);
-		model.addAttribute("user", user);
 		long rowsAffected = da.registerUser(user);
-		if(rowsAffected >= 1){
-			return "/confirmRegister";
-		}
-		else{
-			return "/denyRegister";
-		}
+		if (rowsAffected >= 1)
+			return "/index";
+		else
+			return "/badLogin";
 	}
 
-	//view passwords page
+	// view passwords page
 	@RequestMapping("/viewPasswords")
-	public String viewPasswords(Model model, HttpSession session){
-		//User user = (User) session.getAttribute("currentUser");
+	public String viewPasswords(Model model, HttpSession session) {
+		User user = (User) session.getAttribute("currentUser");
 		List<Password> passwordList = da.selectPasswords("user.getId()");
 		model.addAttribute("passwordList", passwordList);
 		return "/viewPasswords";
 	}
 
 	@GetMapping("/editPassword/{website}")
-	public String editPassword(Model model, @PathVariable("website")String website){
-		//Password password = da.selectAPassword(website);
-		//model.addAttribute("password", password);
+	public String editPassword(Model model, @PathVariable("website") String website) {
+		// Password password = da.selectAPassword(website);
+		// model.addAttribute("password", password);
 		return "/editPassword";
 	}
+
 	@PostMapping("/editPassword")
-	public String editPasswordSubmit(Model model, @ModelAttribute Password password){
-		//long rowsAffected = da.updatePassword(password);
-		//if(rowsAffected >= 1)
-			//return "/editConfirm";
-		//else
-			return "/editDeny";
+	public String editPasswordSubmit(Model model, @ModelAttribute Password password) {
+		// long rowsAffected = da.updatePassword(password);
+		// if(rowsAffected >= 1)
+		// return "/editConfirm";
+		// else
+		return "/editDeny";
 	}
 }
