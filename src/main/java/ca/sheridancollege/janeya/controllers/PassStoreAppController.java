@@ -21,9 +21,9 @@ public class PassStoreAppController {
 
 	@Autowired
 	private DatabaseAccess da;
-	private UserIDCreation uidc;
+	private UserIDCreation uidc = new UserIDCreation(16);
 
-	// index page explaining the project
+	// Initial Login page for accessing the website
 	@GetMapping("/index")
 	public String index() {
 		return "/index";
@@ -52,21 +52,25 @@ public class PassStoreAppController {
 	public String registerSubmit(Model model, @RequestParam(name = "username") String username,
 			@RequestParam(name = "password") String password) {
 		User user = new User();
-		user.setId(uidc.createId(16));
+		user.setId(uidc.createId());
 		user.setUser(username);
 		user.setPass(password);
 		long rowsAffected = da.registerUser(user);
-		if (rowsAffected >= 1)
-			return "/index";
-		else
+		if (rowsAffected >= 1) {
+			long tablesCreated = da.createSchema(user.getId());
+			if (tablesCreated >= 1)
+				return "/index";
+			else
+				return "/badLogin";
+		} else
 			return "/badLogin";
 	}
 
 	// view passwords page
 	@RequestMapping("/viewPasswords")
 	public String viewPasswords(Model model, HttpSession session) {
-		User user = (User) session.getAttribute("currentUser");
-		List<Password> passwordList = da.selectPasswords("user.getId()");
+		String userId = (String) session.getAttribute("currentUser");
+		List<Password> passwordList = da.selectPasswords(userId);
 		model.addAttribute("passwordList", passwordList);
 		return "/viewPasswords";
 	}

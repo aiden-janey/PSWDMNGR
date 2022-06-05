@@ -60,6 +60,10 @@ public class DatabaseAccess {
 	}
 
 	public long createSchema(String userId) {
-		String create = "CREATE TABLE";
+		MapSqlParameterSource namedParam = new MapSqlParameterSource();
+		String create = "CREATE TABLE :userId (website varchar(255), email varchar(255), password varchar(255));";
+		namedParam.addValue("userId", userId);
+		long rowsAffected = jdbc.update(create, namedParam);
+		return rowsAffected;
 	}
 }
